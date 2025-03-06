@@ -45,6 +45,7 @@ import (
 	"github.com/oam-dev/kubevela/apis/core.oam.dev/v1alpha1"
 	"github.com/oam-dev/kubevela/apis/core.oam.dev/v1beta1"
 	"github.com/oam-dev/kubevela/apis/types"
+	"github.com/oam-dev/kubevela/pkg/cue/cuex"
 	"github.com/oam-dev/kubevela/pkg/cue/process"
 	"github.com/oam-dev/kubevela/pkg/multicluster"
 	"github.com/oam-dev/kubevela/pkg/oam"
@@ -107,7 +108,10 @@ func (a addonCueTemplateRender) toObject(cueTemplate string, path string, object
 	if err != nil {
 		return err
 	}
-	v := cuecontext.New().CompileString(contextFile)
+	v, err := cuex.ConfigCompiler.Get().CompileString(context.Background(), contextFile)
+	if err != nil {
+		return err
+	}
 	out, err := value.LookupValueByScript(v, cueTemplate)
 	if err != nil {
 		return err

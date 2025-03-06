@@ -17,10 +17,13 @@ limitations under the License.
 package cuex
 
 import (
+	"context"
+
 	"github.com/kubevela/pkg/cue/cuex"
 	"github.com/kubevela/pkg/util/singleton"
 
 	"github.com/oam-dev/kubevela/pkg/cue/cuex/providers/config"
+	"k8s.io/klog/v2"
 )
 
 // ConfigCompiler ...
@@ -28,5 +31,9 @@ var ConfigCompiler = singleton.NewSingleton[*cuex.Compiler](func() *cuex.Compile
 	compiler := cuex.NewCompilerWithInternalPackages(
 		config.Package,
 	)
+	if err := compiler.LoadExternalPackages(context.Background()); err != nil {
+		klog.Errorf("failed to load external packages for cuex default compiler: %v", err.Error())
+	}
+	go compiler.ListenExternalPackages(nil)
 	return compiler
 })

@@ -23,8 +23,8 @@ import (
 	"strconv"
 	"strings"
 
-	"cuelang.org/go/cue/cuecontext"
 	cueErrors "cuelang.org/go/cue/errors"
+	"github.com/oam-dev/kubevela/pkg/cue/cuex"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -63,13 +63,11 @@ func ValidateDefinitionRevision(ctx context.Context, cli client.Client, def runt
 
 // ValidateCueTemplate validate cueTemplate
 func ValidateCueTemplate(cueTemplate string) error {
-
-	val := cuecontext.New().CompileString(cueTemplate)
-	if e := checkError(val.Err()); e != nil {
-		return e
+	val, err := cuex.ConfigCompiler.Get().CompileString(context.Background(), cueTemplate)
+	if err != nil {
+		return err
 	}
-
-	err := val.Validate()
+	err = val.Validate()
 	return checkError(err)
 }
 

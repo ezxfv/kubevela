@@ -23,7 +23,6 @@ import (
 	"strings"
 
 	"cuelang.org/go/cue"
-	"cuelang.org/go/cue/cuecontext"
 	"github.com/kubevela/pkg/multicluster"
 
 	"github.com/pkg/errors"
@@ -35,6 +34,7 @@ import (
 	"github.com/kubevela/workflow/pkg/cue/model/value"
 	"github.com/kubevela/workflow/pkg/cue/process"
 
+	"github.com/oam-dev/kubevela/pkg/cue/cuex"
 	velaprocess "github.com/oam-dev/kubevela/pkg/cue/process"
 	"github.com/oam-dev/kubevela/pkg/cue/task"
 	"github.com/oam-dev/kubevela/pkg/oam"
@@ -111,9 +111,16 @@ func (wd *workloadDef) Complete(ctx process.Context, abstractTemplate string, pa
 		return err
 	}
 
-	val := cuecontext.New().CompileString(strings.Join([]string{
+	// val := cuecontext.New().CompileString(strings.Join([]string{
+	// 	renderTemplate(abstractTemplate), paramFile, c,
+	// }, "\n"))
+
+	val, err := cuex.ConfigCompiler.Get().CompileString(context.Background(), strings.Join([]string{
 		renderTemplate(abstractTemplate), paramFile, c,
 	}, "\n"))
+	if err != nil {
+		return err
+	}
 
 	if err := val.Validate(); err != nil {
 		return errors.WithMessagef(err, "invalid cue template of workload %s after merge parameter and context", wd.name)
@@ -248,7 +255,11 @@ func checkHealth(templateContext map[string]interface{}, healthPolicyTemplate st
 	}
 	var buff = healthPolicyTemplate + "\n" + runtimeContextBuff
 
-	val := cuecontext.New().CompileString(buff)
+	//val := cuecontext.New().CompileString(buff)
+	val, err := cuex.ConfigCompiler.Get().CompileString(context.Background(), buff)
+	if err != nil {
+		return false, err
+	}
 	healthy, err := val.LookupPath(value.FieldPath(HealthCheckPolicy)).Bool()
 	if err != nil {
 		return false, errors.WithMessage(err, "evaluate health status")
@@ -271,7 +282,11 @@ func getStatusMessage(templateContext map[string]interface{}, customStatusTempla
 	}
 	var buff = customStatusTemplate + "\n" + runtimeContextBuff
 
-	val := cuecontext.New().CompileString(buff)
+	//val := cuecontext.New().CompileString(buff)
+	val, err := cuex.ConfigCompiler.Get().CompileString(context.Background(), buff)
+	if err != nil {
+		return "", err
+	}
 	if val.Err() != nil {
 		return "", errors.WithMessage(val.Err(), "compile status template")
 	}
@@ -318,7 +333,11 @@ func (td *traitDef) Complete(ctx process.Context, abstractTemplate string, param
 	}
 	buff += c
 
-	val := cuecontext.New().CompileString(buff)
+	//val := cuecontext.New().CompileString(buff)
+	val, err := cuex.ConfigCompiler.Get().CompileString(context.Background(), buff)
+	if err != nil {
+		return errors.WithMessagef(err, "invalid template of trait %s", td.name)
+	}
 	if err := val.Validate(); err != nil {
 		return errors.WithMessagef(err, "invalid template of trait %s after merge with parameter and context", td.name)
 	}
