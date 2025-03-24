@@ -31,3 +31,20 @@ patch: {
 		}
 	}
 }
+
+// Patch all outputs with the same labels
+patchOutputs: {
+	for k, v in context.outputs {
+		"\(k)": {
+			metadata: {
+				labels: {
+					for lk, lv in parameter {
+						(lk): lv
+					}
+					// Use the Sum function's return value for outputs too
+					"x.io/debug": "\(sumResult.$returns.result)"
+				}
+			}
+		}
+	}
+}

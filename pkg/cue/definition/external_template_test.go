@@ -1,4 +1,4 @@
-package definition
+package definition_test
 
 import (
 	"os"
@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
+	"github.com/oam-dev/kubevela/pkg/cue/definition"
 	"github.com/oam-dev/kubevela/pkg/cue/process"
 )
 
@@ -17,27 +18,27 @@ func TestExternalPackageWithMyLabelsTrait(t *testing.T) {
 	traitTemplateBytes, err := os.ReadFile(filepath.Join("testdata", "my_labels_trait.cue"))
 	require.NoError(t, err)
 
-	// Define a simple webservice template for testing
-	webserviceTemplate, err := os.ReadFile(filepath.Join("testdata", "webservice.cue"))
+	// Define a simple futuservice template for testing
+	futuserviceTemplate, err := os.ReadFile(filepath.Join("testdata", "futuservice.cue"))
 	require.NoError(t, err)
 
 	// Create a test case for the my-labels trait
 	t.Run("my-labels trait with external utils.Sum function", func(t *testing.T) {
 		// Create a shared context for both workload and trait
 		ctx := process.NewContext(process.ContextData{
-			AppName:         "first-vela-app-3",
-			CompName:        "express-server-3",
+			AppName:         "first-vela-app",
+			CompName:        "express-server",
 			Namespace:       "default",
-			AppRevisionName: "first-vela-app-3-v1",
+			AppRevisionName: "first-vela-app-v1",
 		})
 
 		// First apply the workload
-		workload := NewWorkloadAbstractEngine("webservice")
-		err := workload.Complete(ctx, string(webserviceTemplate), map[string]interface{}{})
+		workload := definition.NewWorkloadAbstractEngine("futuservice")
+		err := workload.Complete(ctx, string(futuserviceTemplate), map[string]interface{}{})
 		require.NoError(t, err)
 
 		// Then apply the trait to the same context
-		trait := NewTraitAbstractEngine("my-labels")
+		trait := definition.NewTraitAbstractEngine("my-labels")
 		params := map[string]interface{}{
 			"x.io/xxx": "v1",
 		}
@@ -45,7 +46,7 @@ func TestExternalPackageWithMyLabelsTrait(t *testing.T) {
 		require.NoError(t, err)
 
 		// Get the final output with the trait applied
-		finalBase, _ := ctx.Output()
+		finalBase, outputs := ctx.Output()
 		finalObj, err := finalBase.Unstructured()
 		require.NoError(t, err)
 
@@ -64,6 +65,19 @@ func TestExternalPackageWithMyLabelsTrait(t *testing.T) {
 		require.True(t, found)
 		assert.Equal(t, "v1", podLabels["x.io/xxx"])
 		assert.Equal(t, "12", podLabels["x.io/debug"])
-		assert.Equal(t, "express-server-3", podLabels["app"])
+		assert.Equal(t, "express-server", podLabels["app"])
+
+		// Check that the outputs also have the labels applied
+		require.NotEmpty(t, outputs)
+		for name, output := range outputs {
+			outputObj, err := output.Ins.Unstructured()
+			require.NoError(t, err, "Failed to convert output %s to unstructured", name)
+
+			outputLabels, found, err := unstructured.NestedStringMap(outputObj.Object, "metadata", "labels")
+			require.NoError(t, err, "Error getting labels for output %s", name)
+			require.True(t, found, "No labels found for output %s", name)
+			assert.Equal(t, "v1", outputLabels["x.io/xxx"], "Missing parameter label in output %s", name)
+			assert.Equal(t, "12", outputLabels["x.io/debug"], "Missing debug label in output %s", name)
+		}
 	})
 }
