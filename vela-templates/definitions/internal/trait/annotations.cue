@@ -1,10 +1,10 @@
 annotations: {
 	type: "trait"
 	annotations: {}
-	description: "Add annotations on your workload. If it generates pod or job, add same annotations for generated pods."
+	description: "Add annotations on K8s pod for your workload"
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["*"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io", "uniteddeployments.apps.kruise.io"]
 	}
 }
 template: {

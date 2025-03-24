@@ -4,7 +4,7 @@ virtualgroup: {
 	labels: {}
 	description: "Add virtual group labels"
 	attributes: {
-		appliesToWorkloads: ["deployments.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io", "uniteddeployments.apps.kruise.io"]
 		podDisruptive: false
 	}
 }

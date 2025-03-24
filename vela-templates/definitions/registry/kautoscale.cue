@@ -7,7 +7,7 @@ kautoscale: {
 	description: "Specify auto scale by annotation"
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps"]
+		appliesToWorkloads: ["deployments.apps", "clonesets.apps.kruise.io"]
 	}
 }
 template: {

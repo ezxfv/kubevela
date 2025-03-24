@@ -10,7 +10,7 @@ import (
 	description: "Expose on the host and bind the external port to host to enable web traffic for your component."
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 

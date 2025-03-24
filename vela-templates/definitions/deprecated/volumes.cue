@@ -6,7 +6,7 @@ volumes: {
 	}
 	description: "Add volumes on K8s pod for your workload which follows the pod spec in path 'spec.template'. This definition is DEPRECATED, please use 'storage' instead."
 	attributes: {
-		appliesToWorkloads: ["deployments.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 		podDisruptive: true
 	}
 }

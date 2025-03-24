@@ -10,6 +10,7 @@ metadata:
 spec:
   appliesToWorkloads:
     - deployments.apps
+    - clonesets.apps.kruise.io
   definitionRef:
     name: autoscalers.standard.oam.dev
   extension:

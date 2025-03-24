@@ -672,6 +672,7 @@ func (p *Parser) ParseComponentFromRevisionAndClient(ctx context.Context, c comm
 		comp.Traits = append(comp.Traits, trait)
 	}
 
+	// TODO: 注入、修改、删除 某些全局trait，或者禁止新增使用该trait的应用，保留存量
 	return comp, nil
 }
 

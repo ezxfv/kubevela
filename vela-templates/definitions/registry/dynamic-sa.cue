@@ -3,7 +3,7 @@
 	annotations: {}
 	labels: {}
 	description: "dynamically specify service account"
-	attributes: appliesToWorkloads: ["deployments.apps"]
+	attributes: appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 }
 template: {
 	processing: {

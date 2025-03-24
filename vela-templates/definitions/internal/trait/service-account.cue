@@ -2,10 +2,10 @@
 	type: "trait"
 	annotations: {}
 	labels: {}
-	description: "Specify serviceAccount for your workload which follows the pod spec in path 'spec.template'."
+	description: "Specify serviceAccount for the component"
 	attributes: {
 		podDisruptive: false
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 template: {

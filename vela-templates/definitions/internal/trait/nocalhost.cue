@@ -8,10 +8,10 @@ nocalhost: {
 	labels: {
 		"ui-hidden": "true"
 	}
-	description: "nocalhost develop configuration."
+	description: "Nocalhost is a Cloud Native Dev Environment."
 	attributes: {
-		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch"]
+		podDisruptive: false
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 

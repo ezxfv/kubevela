@@ -2,7 +2,7 @@
 	alias: ""
 	annotations: {}
 	attributes: {
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "uniteddeployments.apps.kruise.io"]
 		conflictsWith: []
 		podDisruptive:   false
 		workloadRefPath: ""
@@ -53,12 +53,63 @@ template: {
 				}
 			}
 
+			if parameter.targetKind == "CloneSet" && parameter.strategy.type != "Recreate" {
+				// +patchStrategy=retainKeys
+				updateStrategy: {
+					type: parameter.strategy.type
+					if parameter.strategy.type == "RollingUpdate" {
+						rollingUpdate: {
+							maxSurge:       parameter.strategy.rollingStrategy.maxSurge
+							maxUnavailable: parameter.strategy.rollingStrategy.maxUnavailable
+						}
+					}
+				}
+			}
+
+			if parameter.targetKind == "UnitedDeployment" && parameter.strategy.type != "Recreate" {
+				// +patchStrategy=retainKeys
+				updateStrategy: {
+					type: parameter.strategy.type
+					if parameter.strategy.type == "RollingUpdate" {
+						rollingUpdate: {
+							maxSurge:       parameter.strategy.rollingStrategy.maxSurge
+							maxUnavailable: parameter.strategy.rollingStrategy.maxUnavailable
+						}
+					}
+				}
+			}
+
+			if parameter.targetKind == "AdvancedStatefulSet" && parameter.strategy.type != "Recreate" {
+				// +patchStrategy=retainKeys
+				updateStrategy: {
+					type: parameter.strategy.type
+					if parameter.strategy.type == "RollingUpdate" {
+						rollingUpdate: {
+							partition: parameter.strategy.rollingStrategy.partition
+						}
+					}
+				}
+			}
+
+			if parameter.targetKind == "AdvancedDaemonSet" && parameter.strategy.type != "Recreate" {
+				// +patchStrategy=retainKeys
+				updateStrategy: {
+					type: parameter.strategy.type
+					if parameter.strategy.type == "RollingUpdate" {
+						rollingUpdate: {
+							maxSurge:       parameter.strategy.rollingStrategy.maxSurge
+							maxUnavailable: parameter.strategy.rollingStrategy.maxUnavailable
+						}
+					}
+				}
+			}
+
 		}}
 	parameter: {
 		// +usage=Specify the apiVersion of target
 		targetAPIVersion: *"apps/v1" | string
 		// +usage=Specify the kind of target
-		targetKind: *"Deployment" | "StatefulSet" | "DaemonSet"
+		targetKind: *"Deployment" | "StatefulSet" | "DaemonSet" | "CloneSet" | "UnitedDeployment" | "AdvancedStatefulSet" | "AdvancedDaemonSet"
 		// +usage=Specify the strategy of update
 		strategy: {
 			// +usage=Specify the strategy type

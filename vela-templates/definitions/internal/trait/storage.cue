@@ -2,10 +2,10 @@ storage: {
 	type: "trait"
 	annotations: {}
 	labels: {}
-	description: "Add storages on K8s pod for your workload which follows the pod spec in path 'spec.template'."
+	description: "Add storage volume for workload which follows the pod spec in path 'spec.template'."
 	attributes: {
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch"]
 		podDisruptive: true
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 template: {

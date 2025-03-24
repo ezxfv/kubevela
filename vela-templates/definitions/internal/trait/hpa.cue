@@ -5,7 +5,7 @@ hpa: {
 	description: "Configure k8s HPA for Deployment or Statefulsets"
 	attributes: {
 		podDisruptive: false
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io"]
 	}
 }
 template: {
@@ -82,7 +82,7 @@ template: {
 		// +usage=Specify the apiVersion of scale target
 		targetAPIVersion: *"apps/v1" | string
 		// +usage=Specify the kind of scale target
-		targetKind: *"Deployment" | string
+		targetKind: *"Deployment" | "StatefulSet" | "CloneSet" | "AdvancedStatefulSet" | string
 		cpu: {
 			// +usage=Specify resource metrics in terms of percentage("Utilization") or direct value("AverageValue")
 			type: *"Utilization" | "AverageValue"

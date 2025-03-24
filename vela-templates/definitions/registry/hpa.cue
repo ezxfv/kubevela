@@ -5,7 +5,7 @@ hpa: {
 	description: "configure k8s HPA for Deployment"
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps"]
+		appliesToWorkloads: ["deployments.apps", "clonesets.apps.kruise.io"]
 	}
 }
 template: {

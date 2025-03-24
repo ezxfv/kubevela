@@ -1,10 +1,10 @@
 labels: {
 	type: "trait"
 	annotations: {}
-	description: "Add labels on your workload. if it generates pod, add same label for generated pods."
+	description: "Add labels on K8s pod for your workload"
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["*"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io", "uniteddeployments.apps.kruise.io"]
 	}
 }
 template: {

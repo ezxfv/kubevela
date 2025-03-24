@@ -3,7 +3,7 @@ cpuscaler: {
 	annotations: {}
 	description: "Automatically scale the component based on CPU usage."
 	attributes: {
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io"]
 	}
 }
 
@@ -34,6 +34,6 @@ template: {
 		// +usage=Specify the apiVersion of scale target
 		targetAPIVersion: *"apps/v1" | string
 		// +usage=Specify the kind of scale target
-		targetKind: *"Deployment" | string
+		targetKind: *"Deployment" | "StatefulSet" | "CloneSet" | "AdvancedStatefulSet" | string
 	}
 }

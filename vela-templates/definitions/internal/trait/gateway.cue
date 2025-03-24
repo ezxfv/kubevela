@@ -7,7 +7,7 @@ gateway: {
 	description: "Enable public web traffic for the component, the ingress API matches K8s v1.20+."
 	attributes: {
 		podDisruptive: false
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io"]
 
 		status: {
 			customStatus: #"""

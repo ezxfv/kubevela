@@ -4,9 +4,10 @@
 	labels: {
 		"ui-hidden": "true"
 	}
-	description: "Binding secrets of cloud resources to component env. This definition is DEPRECATED, please use 'storage' instead."
+	description: "Binding secrets of cloud resources to component env"
 	attributes: {
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch"]
+		podDisruptive: true
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 template: {

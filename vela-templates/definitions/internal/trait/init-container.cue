@@ -1,10 +1,10 @@
 "init-container": {
 	type: "trait"
 	annotations: {}
-	description: "add an init container and use shared volume with pod"
+	description: "Add init container sidecar to the app"
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 template: {

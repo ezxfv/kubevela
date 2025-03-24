@@ -4,7 +4,7 @@ metrics: {
 	labels: {}
 	description: "Configures monitoring metrics for your service."
 	attributes: {
-		appliesToWorkloads: ["deployments.apps", "jobs.batch"]
+		appliesToWorkloads: ["deployments.apps", "jobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 		definitionRef: name: "metricstraits.standard.oam.dev"
 		workloadRefPath: "spec.workloadRef"
 		extension: install: helm: {

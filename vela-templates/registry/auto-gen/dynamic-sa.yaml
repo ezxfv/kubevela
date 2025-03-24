@@ -10,6 +10,7 @@ metadata:
 spec:
   appliesToWorkloads:
     - deployments.apps
+    - clonesets.apps.kruise.io
   schematic:
     cue:
       template: |

@@ -10,7 +10,7 @@ expose: {
 	attributes: {
 		podDisruptive: false
 		stage:         "PostDispatch"
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io"]
 		status: {
 			customStatus: #"""
 				message: *"" | string

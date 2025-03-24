@@ -4,7 +4,7 @@ route: {
 	labels: {}
 	description: "Configures external access to your service."
 	attributes: {
-		appliesToWorkloads: ["deployments.apps"]
+		appliesToWorkloads: ["deployments.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io"]
 		podDisruptive: false
 		definitionRef: name: "routes.standard.oam.dev"
 		extension: install: helm: {

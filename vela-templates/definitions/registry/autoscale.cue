@@ -7,7 +7,7 @@ autoscale: {
 	description: "Automatically scales workloads by resource utilization metrics or cron triggers."
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io"]
 		workloadRefPath: "spec.workloadRef"
 		definitionRef: name: "autoscalers.standard.oam.dev"
 		extension: install: helm: {

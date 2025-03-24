@@ -5,7 +5,7 @@ scaler: {
 	description: "Manually scale K8s pod for your workload which follows the pod spec in path 'spec.template'."
 	attributes: {
 		podDisruptive: false
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io"]
 	}
 }
 template: {

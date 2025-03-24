@@ -10,7 +10,9 @@ metadata:
 spec:
   appliesToWorkloads:
     - deployments.apps
+    - clonesets.apps.kruise.io
     - jobs.batch
+    - advancedcronjobs.apps.kruise.io
   definitionRef:
     name: metricstraits.standard.oam.dev
   extension:

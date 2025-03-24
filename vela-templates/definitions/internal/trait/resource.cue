@@ -1,10 +1,10 @@
 resource: {
 	type: "trait"
 	annotations: {}
-	description: "Add resource requests and limits on K8s pod for your workload which follows the pod spec in path 'spec.template.'"
+	description: "Specify the resource requirements for the container"
 	attributes: {
 		podDisruptive: true
-		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "cronjobs.batch"]
+		appliesToWorkloads: ["deployments.apps", "statefulsets.apps", "daemonsets.apps", "jobs.batch", "cronjobs.batch", "clonesets.apps.kruise.io", "statefulsets.apps.kruise.io", "daemonsets.apps.kruise.io", "broadcastjobs.apps.kruise.io"]
 	}
 }
 template: {
